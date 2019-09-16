@@ -1,9 +1,16 @@
 import axios from 'axios'
+let baseURL = '';
+
+if (process.env.NODE_ENV === 'development') {
+  baseURL = 'http://localhost:3003'
+} else {
+  baseURL = 'https://myjournalbackend.herokuapp.com/users/1/entries'
+}
 
 export const getPosts = () => async dispatch => {
     dispatch({type: 'LOADING'})
     try {
-      const response = await axios.get('https://myjournalbackend.herokuapp.com/users/1/entries');
+      const response = await axios.get(`${baseURL}`);
       const posts = response.data;
       dispatch({
         type: 'GET_POSTS',
@@ -18,7 +25,7 @@ export const getPosts = () => async dispatch => {
 export const addPost = (newPost) => async dispatch => {
     dispatch({type: 'LOADING'})
     try {
-      const response = await axios.post('https://myjournalbackend.herokuapp.com/users/1/entries', newPost);
+      const response = await axios.post(`${baseURL}`, newPost);
       const addedPost = response.data;
       dispatch({
         type: 'ADD_POST',
@@ -45,7 +52,7 @@ export const addPost = (newPost) => async dispatch => {
 export const updatePost = (id, updatedPost) => async dispatch => {
     dispatch({type: 'LOADING'})
     try {
-      const response = await axios.put(`https://myjournalbackend.herokuapp.com/users/1/entries/${id}`, updatedPost);
+      const response = await axios.put(`${baseURL}/${id}`, updatedPost);
       const editedPost = response.data;
       console.log(editedPost)
       dispatch({
@@ -61,7 +68,7 @@ export const updatePost = (id, updatedPost) => async dispatch => {
 export const deletePost = (id) => async dispatch => {
     dispatch({type: 'LOADING'})
     try {
-      await axios.delete(`https://myjournalbackend.herokuapp.com/users/1/entries/${id}`);
+      await axios.delete(`${baseURL}/${id}`);
       dispatch({
         type: 'DELETE_POST',
         payload: id
