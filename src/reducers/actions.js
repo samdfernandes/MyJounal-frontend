@@ -1,11 +1,6 @@
 import axios from 'axios'
-let baseURL = '';
+let baseURL = 'https://myjournalbackend.herokuapp.com/users/1/entries';
 
-if (process.env.NODE_ENV === 'development') {
-  baseURL = 'http://localhost:3003'
-} else {
-  baseURL = 'https://myjournalbackend.herokuapp.com/users/1/entries'
-}
 
 export const getPosts = () => async dispatch => {
     dispatch({type: 'LOADING'})
